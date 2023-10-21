@@ -12,7 +12,10 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //
+        $services = Service::all();
+        
+        //return $services to json response
+        return response()->json($services);
     }
 
     /**
@@ -28,7 +31,21 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        //Se trabaja con el POST
+        $service = new Service;
+        $service->name = $request->name;
+        $service->description = $request->description;
+        $service->price = $request->price;
+        $service->save();
+
+        $data = [
+            'message' => 'Service created successfully',
+            'service' => $service
+        ];
+
+        //return $service to json response
+        return response()->json($data);
     }
 
     /**
@@ -36,7 +53,9 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
-        //
+        
+        //Se trabaja con el GET
+        return response()->json($service);
     }
 
     /**
@@ -52,7 +71,22 @@ class ServiceController extends Controller
      */
     public function update(Request $request, Service $service)
     {
-        //
+         //Se trabaja con el PUT
+         $service = new Service;
+         $service->name = $request->name;
+         $service->description = $request->description;
+         $service->price = $request->price;
+         $service->save();
+ 
+         $data = [
+             'message' => 'Service updated successfully',
+             'service' => $service
+         ];
+ 
+         //return $service to json response
+         return response()->json($data);
+
+
     }
 
     /**
@@ -60,6 +94,31 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        //
+        //Se trabaja con el DELETE
+        $service->delete();
+
+        $data = [
+            'message' => 'Service deleted successfully',
+            'service' => $service
+        ];
+
+        //return $service to json response
+        return response()->json($data);
     }
+
+    public function clients(Request $request)
+    {
+        $service = Service::find($request->service_id);
+        $clients = $service->clients;
+
+        $data = [
+            'message' => 'Clients retrieved successfully',
+            'clients' => $clients
+        ];
+
+        //return $clients to json response
+        return response()->json($data);
+    }
+
+    
 }
