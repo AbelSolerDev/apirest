@@ -31,7 +31,22 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Se trabaja con el POST
+        $client = new Client;
+        $client->name = $request->name;
+        $client->email = $request->email;
+        $client->phone = $request->phone;
+        $client->address = $request->address;
+        $client->save();
+
+        $data = [
+            'message' => 'Client created successfully',
+            'client' => $client
+        ];
+
+        //return $client to json response
+        return response()->json($data);
+
     }
 
     /**
@@ -39,7 +54,8 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        //
+        //Se trabaja con el GET
+        return response()->json($client);
     }
 
     /**
@@ -55,7 +71,20 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        //
+        //Se trabaja con el PUT
+        $client->name = $request->name;
+        $client->email = $request->email;
+        $client->phone = $request->phone;
+        $client->address = $request->address;
+        $client->save();
+
+        $data = [
+            'message' => 'Client updated successfully',
+            'client' => $client
+        ];
+
+        //return $client to json response
+        return response()->json($data);
     }
 
     /**
@@ -63,6 +92,15 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        //Se trabaja con el DELETE
+        $client->delete();
+
+        $data = [
+            'message' => 'Client deleted successfully',
+            'client' => $client
+        ];
+
+        //return $client to json response
+        return response()->json($data);
     }
 }
